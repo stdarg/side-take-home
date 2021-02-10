@@ -1,0 +1,29 @@
+{
+  "name": "side-take-home",
+  "version": "1.0.0",
+  "description": "homework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stdarg/side-take-home.git"
+  },
+  "keywords": [
+    "homework",
+    "side"
+  ],
+  "author": "Edmond Meinfelder",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stdarg/side-take-home/issues"
+  },
+  "homepage": "https://github.com/stdarg/side-take-home#readme",
+  "dependencies": {
+    "@datafire/simplyrets": "^6.0.0",
+    "apollo-server": "^2.19.2",
+    "apollo-server-express": "^2.19.2",
+    "mongodb": "3.6.3"
+  }
+}
