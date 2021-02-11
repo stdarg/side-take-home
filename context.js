@@ -1,39 +1,34 @@
-const getUserDebug = require('debug')('side:get_user')
-const contextDebug = require('debug')('side:context')
+const debug = require('debug')('side:get_user')
 const { lookupUser } = require('./db')
 
+// Using a token, look the user up in the db
 async function getUser (token) {
   if (!token || typeof (token) !== 'string' | token.length === 0) {
     return false
   }
-  getUserDebug('get_user 3', token)
 
   const user = await lookupUser(token)
-  getUserDebug('XXX', user)
   if (user && typeof (user) === 'object' && Object.prototype.hasOwnProperty.call(user, 'email')) {
-    getUserDebug('get_user 4', token)
+    debug('getUser: Found user by token:', user)
     return user
   }
-  getUserDebug('get_user 5', token)
 
-  return false
+  return false // no user found
 }
 
+
+// The context pull the basic auth token from the headers and adds the user
+// to the context which is available in the resolvers.
 const context = async ({ req }) => {
   const token = (req.headers.authorization || '').split(' ')[1] || ''
-  if (token) {
-    contextDebug('xxx token:', token)
-  }
 
   // try to retrieve a user with the token
   const user = await getUser(token)
   if (user) {
-    contextDebug('xxx User:', user)
     return { user }
   }
-  return { user: false }
+
+  return { user: false } // no user was found
 }
 
-module.exports = {
-  context
-}
+module.exports = { context }

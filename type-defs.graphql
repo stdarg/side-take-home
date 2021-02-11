@@ -2,6 +2,7 @@ type Property {
     area: Int
     bedrooms: Int
 }
+
 type Address {
     crossStreet: String
     state: String
@@ -14,6 +15,7 @@ type Address {
     full: String
     unit: String
 }
+
 type Listing {
     listingId: String
     favoriteCount: Int
