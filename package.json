@@ -4,6 +4,8 @@
   "description": "homework",
   "main": "index.js",
   "scripts": {
+    "app": "source .env && node ./index.js",
+    "format": "./node_modules/.bin/standard . --fix --ext .js",
     "lint": "./node_modules/.bin/eslint . --ext .js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
