@@ -1,0 +1,36 @@
+type Property {
+    area: Int
+    bedrooms: Int
+}
+type Address {
+    crossStreet: String
+    state: String
+    country: String
+    postalCode: String
+    streetName: String
+    streetNumberText: String
+    city: String
+    streetNumber: Int
+    full: String
+    unit: String
+}
+type Listing {
+    listingId: String
+    favoriteCount: Int
+    listPrice: Int
+    property: Property
+    address: Address
+    disclaimer: String
+}
+
+type Query {
+    properties(city: String): [Listing]
+}
+
+type FavoriteSchema {
+    listingId: String
+    count: Int
+}
+type Mutation {
+    favorite(listingId: String): FavoriteSchema
+}
