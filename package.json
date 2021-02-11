@@ -4,6 +4,7 @@
   "description": "homework",
   "main": "index.js",
   "scripts": {
+    "lint": "./node_modules/.bin/eslint . --ext .js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,6 +25,12 @@
     "@datafire/simplyrets": "^6.0.0",
     "apollo-server": "^2.19.2",
     "apollo-server-express": "^2.19.2",
+    "debug": "^2.6.9",
+    "env-var": "^7.0.0",
+    "is2": "^2.0.6",
     "mongodb": "3.6.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.19.0"
   }
 }

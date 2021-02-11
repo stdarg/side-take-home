@@ -1,42 +1,39 @@
-
+const env = require('env-var')
+const debug = require('debug')('side:db')
 const { MongoClient } = require("mongodb");
+
 // Connection URI
-const MONGO_DB_NAME="side-takehome-db"
-const MONGO_USER="side-take-home"
-const MONGO_CRED="very-good-job-8876"
-const MONGO_COL_FAVORITES="favorites"
-const MONGO_COL_USERS="users"
-const uri = "mongodb+srv://side-take-home:very-good-job-8876@cluster0.na4he.mongodb.net/side-takehome-db?retryWrites=true&w=majority"
+//
+const MONGO_DB_NAME=env.get('MONGO_DB_NAME').required()
+const MONGO_USER=env.get('MONGO_USER').required().asString()
+const MONGO_CRED=env.get('MONGO_CRED').required().asString()
+// const MONGO_COL_FAVORITES=env.get('MONGO_COL_FAVORITES').required().asString()
+const MONGO_CLUSTER_DNS=env.get('MONGO_CLUSTER_DNS').required().asString()
+const MONGO_COL_USERS=env.get('MONGO_COL_USERS').required().asString()
+
+const uri = `mongodb+srv://${MONGO_USER}:${MONGO_CRED}@${MONGO_CLUSTER_DNS}/${MONGO_DB_NAME}?retryWrites=true&w=majority`
 
 // Create a new MongoClient
-const client = new MongoClient(uri);
+const client = new MongoClient(uri, { useUnifiedTopology: true });
 
-async function connect() {
+async function connect_db() {
     // Connect the client to the server
     await client.connect();
     // Establish and verify connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Connected successfully to server");
-    return client
+    debug("Connected successfully to db server");
 }
 
 async function lookup_user(token) {
-    const database = client.db("side-takehome-db");
-    const users = database.collection("users");
+    const database = client.db(MONGO_DB_NAME);
+    const users = database.collection(MONGO_COL_USERS);
     const query = { token: token };
     const user = await users.findOne(query)
-    console.log("USER:", user)
+    debug("lookup user found:", user)
     return user
 }
 
-
-async function run() {
-    await connect()
-    // user = await lookup_user("676cfd34-e706-4cce-87ca-97f947c43bd4").catch(console.dir);
-    // console.log(user)
-}
-run().catch(console.dir);
-
 module.exports = {
-    lookup_user: lookup_user
+    connect_db,
+    lookup_user,
 }
